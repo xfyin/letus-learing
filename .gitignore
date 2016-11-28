@@ -27,3 +27,6 @@ src/main/webapp/WEB-INF/temp/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+.metadata/
+generatorSqlmapCustom/
