@@ -1,0 +1,11 @@
+com\letus\mapper\TbUserMapper.class
+com\letus\mapper\TbItemDescMapper.class
+com\letus\mapper\TbContentMapper.class
+com\letus\mapper\TbContentCategoryMapper.class
+com\letus\mapper\TbItemParamMapper.class
+com\letus\mapper\TbItemCatMapper.class
+com\letus\mapper\TbItemMapper.class
+com\letus\mapper\TbOrderItemMapper.class
+com\letus\mapper\TbItemParamItemMapper.class
+com\letus\mapper\TbOrderShippingMapper.class
+com\letus\mapper\TbOrderMapper.class
