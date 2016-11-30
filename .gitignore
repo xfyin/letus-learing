@@ -31,4 +31,5 @@ Desktop.ini
 .metadata/
 generatorSqlmapCustom/
 
-*/*/target/*
+letus-manager/letus-manager-web/target/*
+letus-manager/letus-manager-service/target/*
