@@ -77,19 +77,21 @@ public class ItemController {
   }
   
   /**
-   * 创建商品
+   * 创建商品+添加商品描述信息+添加商品规格信息
    * 
    * @param item
    *        商品信息（页面上序列化后，传入一个pojo对象，页面name属性和pojo中的属性一致）
    * @param desc
    *        商品描述信息
+   * @param itemParam
+   *        商品规格信息
    * @return 响应结果
    */
   @RequestMapping(value = "/save", method = RequestMethod.POST)
   @ResponseBody
-  public LetusResult createItem(TbItem item, String desc) {
+  public LetusResult createItem(TbItem item, String desc, String itemParams) {
     try {
-      return itemService.createItemAndItemDesc(item, desc);
+      return itemService.createItemAndItemDesc(item, desc, itemParams);
     } catch (Exception e) {
       e.printStackTrace();
       return LetusResult.build(100, "添加商品失败,请检查内容重新提交!");

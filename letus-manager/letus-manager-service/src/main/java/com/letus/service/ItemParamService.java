@@ -8,6 +8,7 @@
 package com.letus.service;
 
 import com.letus.common.pojo.LetusResult;
+import com.letus.pojo.TbItemParam;
 
 /**
  * 商品规格参数模板service
@@ -25,4 +26,13 @@ public interface ItemParamService {
    * @return LetusResult
    */
   LetusResult getItemParamByCid(long cid);
+  
+  /**
+   * 增加商品规格
+   * 
+   * @param itemParam
+   *        商品规格
+   * @return LetusResult
+   */
+  LetusResult addItemParam(TbItemParam itemParam);
 }

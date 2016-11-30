@@ -45,8 +45,10 @@ public interface ItemService {
    *        商品信息
    * @param desc
    *        商品描述信息
+   * @param itemParam
+   *        商品规格信息
    * @return 响应格式
    */
-  LetusResult createItemAndItemDesc(TbItem item, String desc);
+  LetusResult createItemAndItemDesc(TbItem item, String desc, String itemParam);
   
 }

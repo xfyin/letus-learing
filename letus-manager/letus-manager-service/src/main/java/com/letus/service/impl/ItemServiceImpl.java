@@ -20,10 +20,12 @@ import com.letus.common.pojo.LetusResult;
 import com.letus.common.utils.IDUtil;
 import com.letus.mapper.TbItemDescMapper;
 import com.letus.mapper.TbItemMapper;
+import com.letus.mapper.TbItemParamItemMapper;
 import com.letus.pojo.TbItem;
 import com.letus.pojo.TbItemDesc;
 import com.letus.pojo.TbItemExample;
 import com.letus.pojo.TbItemExample.Criteria;
+import com.letus.pojo.TbItemParamItem;
 import com.letus.service.ItemService;
 
 /**
@@ -45,6 +47,9 @@ public class ItemServiceImpl implements ItemService {
    */
   @Autowired
   private TbItemDescMapper itemDescMapper;
+  
+  @Autowired
+  private TbItemParamItemMapper itemParamItemMapper;
   
   @Override
   public TbItem getItemById(long itemId) {
@@ -74,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
   }
   
   @Override
-  public LetusResult createItemAndItemDesc(TbItem item, String desc) {
+  public LetusResult createItemAndItemDesc(TbItem item, String desc, String itemParam) {
     // 补全 item信息
     long itemId = IDUtil.genItemId();
     item.setId(itemId);
@@ -85,6 +90,27 @@ public class ItemServiceImpl implements ItemService {
     itemMapper.insert(item);
     // 添加商品描述信息
     createItemDesc(itemId, desc);
+    // 添加商品规格信息
+    insertItemParamItem(itemId, itemParam);
+    return LetusResult.ok();
+  }
+  
+  /**
+   * 增加商品规格信息
+   * 
+   * @param itemId
+   *        商品id
+   * @param itemParm
+   *        规格信息
+   * @return LetusResult
+   */
+  private LetusResult insertItemParamItem(long itemId, String itemParam) {
+    TbItemParamItem paramItem = new TbItemParamItem();
+    paramItem.setItemId(itemId);
+    paramItem.setParamData(itemParam);
+    paramItem.setCreated(new Date());
+    paramItem.setUpdated(new Date());
+    itemParamItemMapper.insert(paramItem);
     return LetusResult.ok();
   }
   

@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.letus.common.pojo.LetusResult;
+import com.letus.pojo.TbItemParam;
 import com.letus.service.ItemParamService;
 
 
@@ -37,6 +39,16 @@ public class ItemParamController {
   @ResponseBody
   public LetusResult getItemParamByCid(@PathVariable long itemCatId) {
     return itemParamService.getItemParamByCid(itemCatId);
+  }
+  
+  
+  @RequestMapping(value="/save/{cid}" , method = RequestMethod.POST)
+  @ResponseBody
+  public LetusResult saveItemParam(@PathVariable long cid, String paramData) {
+    TbItemParam itemParam = new TbItemParam();
+    itemParam.setParamData(paramData);
+    itemParam.setItemCatId(cid);
+    return itemParamService.addItemParam(itemParam);
   }
   
 }
