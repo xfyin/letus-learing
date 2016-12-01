@@ -13,7 +13,6 @@ buildNumber.properties
 *.classpath
 *.project
 .MF
-*.properties
 *.checkstyle
 src/main/webapp/WEB-INF/work/
 src/main/webapp/WEB-INF/temp/
