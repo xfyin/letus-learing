@@ -33,3 +33,9 @@ generatorSqlmapCustom/
 
 letus-manager/letus-manager-web/target/*
 letus-manager/letus-manager-service/target/*
+letus-manager/letus-manager-mapper/target/*
+letus-manager/letus-manager-pojo/target/*
+letus-manager/letus-manager-service/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+letus-manager/letus-manager-service/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+letus-manager/letus-manager-web/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+letus-manager/letus-manager-web/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
