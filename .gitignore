@@ -38,3 +38,4 @@ letus-manager/letus-manager-service/target/maven-status/maven-compiler-plugin/co
 letus-manager/letus-manager-service/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 letus-manager/letus-manager-web/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 letus-manager/letus-manager-web/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+letus-portal/src/test/*

@@ -241,7 +241,6 @@ var TT = LETUS = {
 						var input = _self.siblings("input");
 						input.parent().find("img").remove();
 						input.val(url);
-						alert("pic+++"+url);
 						input.after("<a href='"+url+"' target='_blank'><img src='"+url+"' width='80' height='50'/></a>");
 						this.hideDialog();
 					}
