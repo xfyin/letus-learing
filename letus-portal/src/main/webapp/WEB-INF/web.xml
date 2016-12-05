@@ -48,5 +48,9 @@
 		<!-- 静态资源css、js等都会被过滤掉，所以需要在spingmvc.xml中配置资源映射标签 -->
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>letus-protal</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>

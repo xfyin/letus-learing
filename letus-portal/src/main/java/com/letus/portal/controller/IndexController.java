@@ -8,6 +8,7 @@
 package com.letus.portal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +51,7 @@ public class IndexController {
   }
   
   /**
-   * 测试httpClient的post请求
+   * 测试httpClient的post请求(url是*.html请求时，不能将对象转换为json返回，可以将后缀改为*.do)
    * 
    * @return LetusResult
    */
@@ -61,11 +62,12 @@ public class IndexController {
   }
   
   /**
-   * 测试httpClient的带参数的post请求
+   * 测试httpClient的带参数的post请求(produces解决乱码问题)
    * 
    * @return LetusResult
    */
-  @RequestMapping(value = "/httpclient/postwithparams", method = RequestMethod.POST)
+  @RequestMapping(value = "/httpclient/postwithparams", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE
+      + ";charset=utf-8")
   @ResponseBody
   public String httpClientWithParamTest(String name, String pwd) {
     return "name:" + name + "\tpassword:" + pwd;
