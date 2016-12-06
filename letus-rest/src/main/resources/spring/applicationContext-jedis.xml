@@ -40,8 +40,10 @@
 		<constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
 	</bean> -->
 	
+	<bean id="jedisClient" class="com.letus.rest.dao.impl.JedisClientSingle"></bean>
+	
 	<!-- jedis集群版, 单机版和集群版一般二选一-->
-	<bean id="redisCluster" class="redis.clients.jedis.JedisCluster">
+	<!-- <bean id="redisCluster" class="redis.clients.jedis.JedisCluster">
 		<constructor-arg name="nodes">
 			<set>
 				<bean name="redis.clients.jedis.HostAndPort">
@@ -72,4 +74,7 @@
 		</constructor-arg>
 		<constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
 	</bean>
+	
+	<bean id="jedisClient" class="com.letus.rest.dao.impl.JedisClientCluster"></bean>
+	 -->
 </beans>
