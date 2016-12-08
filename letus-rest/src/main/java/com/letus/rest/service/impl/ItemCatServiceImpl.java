@@ -11,12 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.letus.common.utils.JsonUtils;
 import com.letus.mapper.TbItemCatMapper;
 import com.letus.pojo.TbItemCat;
 import com.letus.pojo.TbItemCatExample;
 import com.letus.pojo.TbItemCatExample.Criteria;
+import com.letus.rest.dao.JedisClient;
 import com.letus.rest.pojo.CatNode;
 import com.letus.rest.pojo.CatResult;
 import com.letus.rest.service.ItemCatService;
@@ -29,6 +34,18 @@ import com.letus.rest.service.ItemCatService;
  */
 @Service
 public class ItemCatServiceImpl implements ItemCatService {
+  
+  /**
+   * 首页商品类目信息在redis总保存的key
+   */
+  @Value("${INDEX_ITEM_CATEGROY_REDIS_KEY}")
+  private String INDEX_ITEM_CATEGROY_REDIS_KEY;
+  
+  /**
+   * jedis单机版
+   */
+  @Autowired
+  private JedisClient jedisClientSingle;
   
   /**
    * 注入商品分类代理
@@ -50,6 +67,19 @@ public class ItemCatServiceImpl implements ItemCatService {
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   private List<?> queryCatList(long parentId) {
+    
+    // 从redis缓存中取
+    try {
+      String getcatNodes = jedisClientSingle.hget(INDEX_ITEM_CATEGROY_REDIS_KEY, parentId + "");
+      if(!StringUtils.isEmpty(getcatNodes)) {
+        return JsonUtils.jsonToList(getcatNodes, Object.class);
+      }
+    }
+    catch (Exception e) {
+     e.printStackTrace();
+    }
+    
+    // 若缓存中没有，则从数据库中取
     // 构造查询条件
     TbItemCatExample example = new TbItemCatExample();
     Criteria criteria = example.createCriteria();
@@ -89,6 +119,18 @@ public class ItemCatServiceImpl implements ItemCatService {
         catNodes.add("/products/" + cat.getId() + ".html|" + cat.getName());
       }
     }
+    
+    // 将商品类目信息保存到redis中缓存
+    try {
+      String catNodesCache = JsonUtils.objectToJson(catNodes);
+      jedisClientSingle.hset(INDEX_ITEM_CATEGROY_REDIS_KEY, parentId + "", catNodesCache);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    
+    
     return catNodes;
   }
   

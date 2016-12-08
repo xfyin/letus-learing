@@ -46,7 +46,8 @@ public interface JedisClient {
   
   /**
    * 存hashy
-   *        key
+   * key
+   * 
    * @return String
    * 
    * @param hkey
@@ -95,5 +96,25 @@ public interface JedisClient {
    * @return 剩余时间 ， -2表示不存在了
    */
   long ttl(String key);
+  
+  /**
+   * 删除key对应的值
+   * 
+   * @param key
+   *        key
+   * @return long long
+   */
+  long del(String key);
+  
+  /**
+   * hash 删除key对应的值
+   * 
+   * @param hkey
+   *        hkey
+   * @param key
+   *        key
+   * @return long
+   */
+  long hdel(String hkey, String key);
   
 }

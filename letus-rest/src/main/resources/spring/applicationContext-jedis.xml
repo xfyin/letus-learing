@@ -33,17 +33,16 @@
 	</bean>	
 	
 	<!-- jedis客户端单机版 -->
-	<!-- <bean id="redisCluster" class="redis.clients.jedis.JedisPool">
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
 		<constructor-arg name="host" value="192.168.1.125"/>
 		<constructor-arg name="port" value="6379"/>
-		可以不用配置连接池，用默认的
+		<!-- 可以不用配置连接池，用默认的 -->
 		<constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
-	</bean> -->
-	
-	<bean id="jedisClient" class="com.letus.rest.dao.impl.JedisClientSingle"></bean>
+	</bean>
+	<bean id="jedisClientSingle" class="com.letus.rest.dao.impl.JedisClientSingle"></bean>
 	
 	<!-- jedis集群版, 单机版和集群版一般二选一-->
-	<!-- <bean id="redisCluster" class="redis.clients.jedis.JedisCluster">
+	<!-- <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
 		<constructor-arg name="nodes">
 			<set>
 				<bean name="redis.clients.jedis.HostAndPort">
@@ -74,7 +73,6 @@
 		</constructor-arg>
 		<constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
 	</bean>
-	
-	<bean id="jedisClient" class="com.letus.rest.dao.impl.JedisClientCluster"></bean>
+	<bean id="jedisClientCluster" class="com.letus.rest.dao.impl.JedisClientCluster"></bean>
 	 -->
 </beans>

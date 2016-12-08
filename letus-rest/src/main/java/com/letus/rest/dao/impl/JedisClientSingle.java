@@ -23,6 +23,9 @@ import com.letus.rest.dao.JedisClient;
 // @Repository 不用该注解需要在配置文件配置
 public class JedisClientSingle implements JedisClient {
   
+  /**
+   * jedis池
+   */
   @Autowired
   private JedisPool jedisPool;
   
@@ -86,6 +89,22 @@ public class JedisClientSingle implements JedisClient {
   public long ttl(String key) {
     Jedis pool = jedisPool.getResource();
     Long value = pool.ttl(key);
+    pool.close();
+    return value;
+  }
+  
+  @Override
+  public long del(String key) {
+    Jedis pool = jedisPool.getResource();
+    Long value = pool.del(key);
+    pool.close();
+    return value;
+  }
+
+  @Override
+  public long hdel(String hkey, String key) {
+    Jedis pool = jedisPool.getResource();
+    Long value = pool.hdel(hkey, key);
     pool.close();
     return value;
   }
