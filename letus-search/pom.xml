@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>letus-parent</artifactId>
+		<groupId>com.letus</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.letus</groupId>
+	<artifactId>letus-search</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>com.letus</groupId>
+			<artifactId>letus-manager-mapper</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.letus</groupId>
+			<artifactId>letus-manager-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- solr索引库客户端jar -->
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<configuration>
+					<port>8083</port>
+					<path>/</path>
+				</configuration>
+			</plugin>
+		</plugins>
+		<!-- 如果不添加此节点mybatis的mapper.xml文件都会被漏掉。 -->
+		<resources>
+			<!-- 解决：org.springframework.web.util.NestedServletException: Request processing 
+				failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid 
+				bound statement (not found): com.letus.search.mapper.ItemMapper.queryItemList -->
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			<!--解决： Caused by: java.io.FileNotFoundException: class path resource [spring/] 
+				cannot be resolved to URL because it does not exist -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+		
+	</build>
+</project>
