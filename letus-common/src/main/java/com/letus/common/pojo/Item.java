@@ -1,11 +1,11 @@
 /**
  * File：Item.java
- * Package：com.letus.search.pojo
+ * Package：com.letus.common.pojo
  * Author：xfyin
  * Date：2016-12-10 下午9:35:40
  * Copyright (C) 2016-2016 letus179-Copyright
  */
-package com.letus.search.pojo;
+package com.letus.common.pojo;
 
 /**
  * solr索引 商品pojo

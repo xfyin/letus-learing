@@ -7,19 +7,17 @@
  */
 package com.letus.search.service.impl;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.letus.common.pojo.Item;
 import com.letus.common.pojo.LetusResult;
 import com.letus.common.utils.ExceptionUtil;
 import com.letus.search.mapper.ItemMapper;
-import com.letus.search.pojo.Item;
 import com.letus.search.service.ItemService;
 
 /**

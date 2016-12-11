@@ -9,7 +9,7 @@ package com.letus.search.mapper;
 
 import java.util.List;
 
-import com.letus.search.pojo.Item;
+import com.letus.common.pojo.Item;
 
 /**
  * 查询商品信息mapper

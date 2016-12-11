@@ -7,7 +7,6 @@
  */
 package com.letus.search.controller;
 
-import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.letus.common.pojo.LetusResult;
+import com.letus.common.pojo.SearchResult;
 import com.letus.common.utils.ExceptionUtil;
-import com.letus.search.pojo.SearchResult;
 import com.letus.search.service.SearchService;
 
 /**

@@ -1,11 +1,11 @@
 /**
  * File：SearchResult.java
- * Package：com.letus.search.pojo
+ * Package：com.letus.common.pojo
  * Author：xfyin
  * Date：2016-12-11 上午11:37:50
  * Copyright (C) 2016-2016 letus179-Copyright
  */
-package com.letus.search.pojo;
+package com.letus.common.pojo;
 
 import java.util.List;
 

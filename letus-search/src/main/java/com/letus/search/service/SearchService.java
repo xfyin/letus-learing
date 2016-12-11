@@ -9,7 +9,7 @@ package com.letus.search.service;
 
 import org.apache.solr.client.solrj.SolrServerException;
 
-import com.letus.search.pojo.SearchResult;
+import com.letus.common.pojo.SearchResult;
 
 /**
  * 查询索引库service

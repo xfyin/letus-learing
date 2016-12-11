@@ -20,9 +20,9 @@ import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.letus.common.pojo.Item;
+import com.letus.common.pojo.SearchResult;
 import com.letus.search.dao.SearchDao;
-import com.letus.search.pojo.Item;
-import com.letus.search.pojo.SearchResult;
 
 /**
  * 查询索引库dao实现

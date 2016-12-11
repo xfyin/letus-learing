@@ -12,8 +12,8 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.letus.common.pojo.SearchResult;
 import com.letus.search.dao.SearchDao;
-import com.letus.search.pojo.SearchResult;
 import com.letus.search.service.SearchService;
 
 /**
