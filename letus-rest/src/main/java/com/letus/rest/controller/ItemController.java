@@ -44,4 +44,17 @@ public class ItemController {
   public LetusResult queryItemBaseInfo(@PathVariable long itemId) {
     return itemService.queryItemBaseInfo(itemId);
   }
+  
+  /**
+   * 根据商品id获取商品描述信息
+   * 
+   * @param itemId
+   *        商品id
+   * @return LetusResult
+   */
+  @RequestMapping("/descinfo/{itemId}")
+  @ResponseBody
+  public LetusResult queryItemDescInfo(@PathVariable long itemId) {
+    return itemService.queryItemDescInfo(itemId);
+  }
 }

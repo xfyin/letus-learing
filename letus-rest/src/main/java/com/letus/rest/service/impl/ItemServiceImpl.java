@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 import com.letus.common.pojo.LetusResult;
 import com.letus.common.utils.JsonUtils;
+import com.letus.mapper.TbItemDescMapper;
 import com.letus.mapper.TbItemMapper;
 import com.letus.pojo.TbItem;
+import com.letus.pojo.TbItemDesc;
 import com.letus.rest.dao.JedisClient;
 import com.letus.rest.service.ItemService;
 
@@ -42,10 +44,16 @@ public class ItemServiceImpl implements ItemService {
   private Integer REDIS_ITEM_EXPIRE;
   
   /**
-   * 注入mapper
+   * 注入item_mapper
    */
   @Autowired
   private TbItemMapper itemMapper;
+  
+  /**
+   * 注入desc_mapper
+   */
+  @Autowired
+  private TbItemDescMapper tbItemDescMapper;
   
   /**
    * 注入缓存
@@ -71,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
     
     // 根据商品id获取商品信息
     TbItem item = itemMapper.selectByPrimaryKey(itemId);
-     
+    
     try {
       // 把商品信息写入缓存，并设置key的有效期
       jedisClient.set(key, JsonUtils.objectToJson(item));
@@ -84,4 +92,32 @@ public class ItemServiceImpl implements ItemService {
     return LetusResult.ok(item);
   }
   
+  @Override
+  public LetusResult queryItemDescInfo(long itemId) {
+    // key
+    String key = REDIS_ITEM_KEY + ":" + itemId + ":desc";
+    // 取缓存
+    try {
+      String itemDescInfo = jedisClient.get(key);
+      if (!StringUtils.isBlank(itemDescInfo)) {
+        return LetusResult.ok(JsonUtils.jsonToPojo(itemDescInfo, TbItemDesc.class));
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    TbItemDesc itemDesc = tbItemDescMapper.selectByPrimaryKey(itemId);
+    
+    // 存数据到redis，并设置过期时间
+    try {
+      jedisClient.set(key, JsonUtils.objectToJson(itemDesc));
+      jedisClient.expire(key, REDIS_ITEM_EXPIRE);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    return LetusResult.ok(itemDesc);
+  }
 }

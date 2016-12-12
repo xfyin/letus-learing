@@ -10,7 +10,7 @@ package com.letus.rest.service;
 import com.letus.common.pojo.LetusResult;
 
 /**
- * 商品基本信息
+ * 商品信息
  * 
  * @author xfyin
  * 
@@ -25,4 +25,13 @@ public interface ItemService {
    * @return LetusResult
    */
   LetusResult queryItemBaseInfo(long itemId);
+  
+  /**
+   * 根据商品id查询商品描述信息
+   * 
+   * @param itemId
+   *        商品id
+   * @return LetusResult
+   */
+  LetusResult queryItemDescInfo(long itemId);
 }
