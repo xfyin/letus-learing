@@ -7,6 +7,8 @@
  */
 package com.letus.rest.service.impl;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +19,12 @@ import com.letus.common.pojo.LetusResult;
 import com.letus.common.utils.JsonUtils;
 import com.letus.mapper.TbItemDescMapper;
 import com.letus.mapper.TbItemMapper;
+import com.letus.mapper.TbItemParamItemMapper;
 import com.letus.pojo.TbItem;
 import com.letus.pojo.TbItemDesc;
+import com.letus.pojo.TbItemParamItem;
+import com.letus.pojo.TbItemParamItemExample;
+import com.letus.pojo.TbItemParamItemExample.Criteria;
 import com.letus.rest.dao.JedisClient;
 import com.letus.rest.service.ItemService;
 
@@ -41,7 +47,7 @@ public class ItemServiceImpl implements ItemService {
    * 商品过期时间
    */
   @Value("{REDIS_ITEM_EXPIRE}")
-  private Integer REDIS_ITEM_EXPIRE;
+  private String REDIS_ITEM_EXPIRE;
   
   /**
    * 注入item_mapper
@@ -54,6 +60,12 @@ public class ItemServiceImpl implements ItemService {
    */
   @Autowired
   private TbItemDescMapper tbItemDescMapper;
+  
+  /**
+   * 注入param_item_mapper
+   */
+  @Autowired
+  private TbItemParamItemMapper itemParamItemMapper;
   
   /**
    * 注入缓存
@@ -83,7 +95,7 @@ public class ItemServiceImpl implements ItemService {
     try {
       // 把商品信息写入缓存，并设置key的有效期
       jedisClient.set(key, JsonUtils.objectToJson(item));
-      jedisClient.expire(key, REDIS_ITEM_EXPIRE);
+      jedisClient.expire(key, Integer.valueOf(REDIS_ITEM_EXPIRE));
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -107,17 +119,55 @@ public class ItemServiceImpl implements ItemService {
       e.printStackTrace();
     }
     
+    // 查询商品描述信息
     TbItemDesc itemDesc = tbItemDescMapper.selectByPrimaryKey(itemId);
     
     // 存数据到redis，并设置过期时间
     try {
       jedisClient.set(key, JsonUtils.objectToJson(itemDesc));
-      jedisClient.expire(key, REDIS_ITEM_EXPIRE);
+      jedisClient.expire(key, Integer.valueOf(REDIS_ITEM_EXPIRE));
     }
     catch (Exception e) {
       e.printStackTrace();
     }
     
     return LetusResult.ok(itemDesc);
+  }
+  
+  @Override
+  public LetusResult queryItemParamItem(long itemId) {
+    // key
+    String key = REDIS_ITEM_KEY + ":" + itemId + ":param";
+    // 取缓存
+    try {
+      String itemParamInfo = jedisClient.get(key);
+      if (!StringUtils.isBlank(itemParamInfo)) {
+        return LetusResult.ok(JsonUtils.jsonToPojo(itemParamInfo, TbItemParamItem.class));
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    // 查询商品规格参数信息
+    TbItemParamItemExample example = new TbItemParamItemExample();
+    Criteria criteria = example.createCriteria();
+    criteria.andItemIdEqualTo(itemId);
+    // selectByExampleWithBLOBs mapper中没有将大文本直接查出
+    List<TbItemParamItem> itemParamItems = itemParamItemMapper.selectByExampleWithBLOBs(example);
+    if (itemParamItems == null || itemParamItems.size() == 0) {
+      return LetusResult.build(102, "无此商品规格");
+    }
+    TbItemParamItem itemParamItem = itemParamItems.get(0);
+    // 存数据到redis，并设置过期时间
+    try {
+      jedisClient.set(key, JsonUtils.objectToJson(itemParamItem));
+      jedisClient.expire(key, Integer.valueOf(REDIS_ITEM_EXPIRE));
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    return LetusResult.ok(itemParamItem);
   }
 }

@@ -34,4 +34,13 @@ public interface ItemService {
    * @return LetusResult
    */
   LetusResult queryItemDescInfo(long itemId);
+  
+  /**
+   * 根据商品id查询商品规格参数信息
+   * 
+   * @param itemId
+   *        商品id
+   * @return LetusResult
+   */
+  LetusResult queryItemParamItem(long itemId);
 }
