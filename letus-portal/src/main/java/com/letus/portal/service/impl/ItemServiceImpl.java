@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.letus.common.pojo.LetusResult;
 import com.letus.common.utils.HttpClientUtil;
+import com.letus.pojo.TbItemDesc;
 import com.letus.portal.pojo.ItemInfo;
 import com.letus.portal.service.ItemService;
 
@@ -58,6 +59,24 @@ public class ItemServiceImpl implements ItemService {
         LetusResult letusResult = LetusResult.formatToPojo(itemJson, ItemInfo.class);
         if (letusResult.getStatus() == 200) {
           return (ItemInfo) letusResult.getData();
+        }
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+  
+  @Override
+  public String queryItemDescInfo(long itemId) {
+    try {
+      String itemJson = HttpClientUtil.doGet(REST_BASE_URL + ITEM_DESC_INFO_URL + itemId);
+      if (!StringUtils.isBlank(itemJson)) {
+        LetusResult letusResult = LetusResult.formatToPojo(itemJson, TbItemDesc.class);
+        if (letusResult.getStatus() == 200) {
+          // 商品描述信息
+          return ((TbItemDesc) letusResult.getData()).getItemDesc();
         }
       }
     }
