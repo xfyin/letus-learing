@@ -40,14 +40,14 @@ public class ItemServiceImpl implements ItemService {
   /**
    * 商品信息在redis中保存的key
    */
-  @Value("{REDIS_ITEM_KEY}")
+  @Value("${REDIS_ITEM_KEY}")
   private String REDIS_ITEM_KEY;
   
   /**
    * 商品过期时间
    */
-  @Value("{REDIS_ITEM_EXPIRE}")
-  private String REDIS_ITEM_EXPIRE;
+  @Value("${REDIS_ITEM_EXPIRE}")
+  private Integer REDIS_ITEM_EXPIRE;
   
   /**
    * 注入item_mapper
@@ -95,7 +95,7 @@ public class ItemServiceImpl implements ItemService {
     try {
       // 把商品信息写入缓存，并设置key的有效期
       jedisClient.set(key, JsonUtils.objectToJson(item));
-      jedisClient.expire(key, Integer.valueOf(REDIS_ITEM_EXPIRE));
+      jedisClient.expire(key, REDIS_ITEM_EXPIRE);
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -125,7 +125,7 @@ public class ItemServiceImpl implements ItemService {
     // 存数据到redis，并设置过期时间
     try {
       jedisClient.set(key, JsonUtils.objectToJson(itemDesc));
-      jedisClient.expire(key, Integer.valueOf(REDIS_ITEM_EXPIRE));
+      jedisClient.expire(key, REDIS_ITEM_EXPIRE);
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -162,7 +162,7 @@ public class ItemServiceImpl implements ItemService {
     // 存数据到redis，并设置过期时间
     try {
       jedisClient.set(key, JsonUtils.objectToJson(itemParamItem));
-      jedisClient.expire(key, Integer.valueOf(REDIS_ITEM_EXPIRE));
+      jedisClient.expire(key, REDIS_ITEM_EXPIRE);
     }
     catch (Exception e) {
       e.printStackTrace();

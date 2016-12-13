@@ -7,7 +7,6 @@
  */
 package com.letus.common.pojo;
 
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * solr索引 商品pojo
@@ -51,19 +50,6 @@ public class Item {
    * 商品描述
    */
   private String itemDesc;
-  
-  /**
-   * 数据库表中image字段可能存储了多张图片信息
-   * 
-   * @return 图片数组
-   */
-  public String[] getItems() {
-    if (StringUtils.isEmpty(image)) {
-      return null;
-    }
-    String[] images = image.split(",");
-    return images;
-  }
   
   /**
    * @return id
