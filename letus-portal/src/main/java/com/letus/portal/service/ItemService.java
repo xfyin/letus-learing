@@ -7,7 +7,6 @@
  */
 package com.letus.portal.service;
 
-import com.letus.pojo.TbItemDesc;
 import com.letus.portal.pojo.ItemInfo;
 
 /**
@@ -35,4 +34,13 @@ public interface ItemService {
    * @return html字符串片段
    */
   String queryItemDescInfo(long itemId);
+  
+  /**
+   * 根据商品id查询 商品规格参数
+   * 
+   * @param itemId
+   *        商品id
+   * @return html字符串片段
+   */
+  String queryItemParamItem(long itemId);
 }

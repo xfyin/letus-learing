@@ -50,7 +50,7 @@ public class ItemController {
   }
   
   /**
-   * 根据商品id获取商品基本信息(html片段有汉字，需要解决乱码)
+   * 根据商品id获取商品描述信息(html片段有汉字，需要解决乱码)
    * 
    * @param itemId
    *        商品id
@@ -60,5 +60,19 @@ public class ItemController {
   @ResponseBody
   public String queryItemDescInfo(@PathVariable Long itemId) {
     return itemService.queryItemDescInfo(itemId);
+  }
+  
+  /**
+   * 根据商品id获取商品规格参数信息(html片段有汉字，需要解决乱码)
+   * 
+   * @param itemId
+   *        商品id
+   * @return ModelAndView
+   */
+  @RequestMapping(value = "/param/{itemId}", produces = MediaType.TEXT_HTML_VALUE
+      + ";charset=utf-8")
+  @ResponseBody
+  public String queryItemParamItem(@PathVariable Long itemId) {
+    return itemService.queryItemParamItem(itemId);
   }
 }
