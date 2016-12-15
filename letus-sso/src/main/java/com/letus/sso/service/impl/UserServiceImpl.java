@@ -134,16 +134,13 @@ public class UserServiceImpl implements UserService {
     LetusResult result = this.queryUserByParam(username, 1);
     // 用户不存在
     if (103 == result.getStatus()) {
-      result.setMsg("用户名或密码错误");
-      return result;
+      return LetusResult.build(103, "用户名或密码错误");
     }
     // 用户
     TbUser user = (TbUser) result.getData();
     // 密码错误
     if (!DigestUtils.md5DigestAsHex(password.getBytes()).equals(user.getPassword())) {
-      result.setMsg("用户名或密码错误");
-      result.setData(null);
-      return result;
+      return LetusResult.build(103, "用户名或密码错误");
     }
     // token
     String token = IDUtil.UUID();

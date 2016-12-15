@@ -20,4 +20,10 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<!-- 资源映射标签 必须完整写出路径 /.../,不然映射不到 || 该配置由springMVC拦截，即web.xml拦截为'/'-->
+	<mvc:resources location="/WEB-INF/css/" mapping="/css/**" />
+	<mvc:resources location="/WEB-INF/js/" mapping="/js/**" />
+	<mvc:resources location="/WEB-INF/images/" mapping="/images/**" />
+
+
 </beans>

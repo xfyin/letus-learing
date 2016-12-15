@@ -92,23 +92,29 @@ public class UserController {
   @RequestMapping(value = "/register", method = RequestMethod.POST)
   @ResponseBody
   public LetusResult addUser(TbUser user) {
-    // 校验用户名，不能重复
+    // 校验用户名，不能重复,不能为空
     LetusResult result = userService.queryUserByParam(user.getUsername(), 1);
     if (result.getStatus() == 200) {
       result.setData(null);
       return result;
     }
-    // 校验手机号，不能重复
-    result = userService.queryUserByParam(user.getPhone(), 2);
-    if (result.getStatus() == 200) {
-      result.setData(null);
-      return result;
+    // 校验手机号，不能重复，可以为空
+    String phone = user.getPhone();
+    if (!StringUtils.isBlank(phone)) {
+      result = userService.queryUserByParam(phone, 2);
+      if (result.getStatus() == 200) {
+        result.setData(null);
+        return result;
+      }
     }
-    // 校验邮箱，不能重复
-    result = userService.queryUserByParam(user.getEmail(), 3);
-    if (result.getStatus() == 200) {
-      result.setData(null);
-      return result;
+    // 校验邮箱，不能重复，可以为空
+    String email = user.getEmail();
+    if (!StringUtils.isBlank(email)) {
+      result = userService.queryUserByParam(user.getEmail(), 3);
+      if (result.getStatus() == 200) {
+        result.setData(null);
+        return result;
+      }
     }
     
     try {
