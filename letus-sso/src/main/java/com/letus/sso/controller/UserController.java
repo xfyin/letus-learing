@@ -7,10 +7,7 @@
  */
 package com.letus.sso.controller;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,12 +16,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.letus.common.pojo.LetusResult;
 import com.letus.common.utils.CookieUtils;
@@ -223,7 +218,7 @@ public class UserController {
     if (StringUtils.isBlank(callback)) {
       try {
         // 回调首页
-        response.sendRedirect("http://localhost:8082");
+        response.sendRedirect((String)result.getData());
       }
       catch (IOException e) {
         e.printStackTrace();

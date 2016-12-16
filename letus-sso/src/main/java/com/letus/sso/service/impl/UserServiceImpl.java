@@ -48,6 +48,12 @@ public class UserServiceImpl implements UserService {
   private Integer SSO_SESSION_EXPIRE;
   
   /**
+   * 门户portal系统的首页URL
+   */
+  @Value("${PORTAL_BASE_URL}")
+  private String PORTAL_BASE_URL;
+  
+  /**
    * 缓存
    */
   @Autowired
@@ -169,6 +175,6 @@ public class UserServiceImpl implements UserService {
   @Override
   public LetusResult logout(String token) {
     jedisClient.del(REDIS_USER_SESSION_KEY + ":" + token);
-    return LetusResult.ok();
+    return LetusResult.ok(PORTAL_BASE_URL);
   }
 }

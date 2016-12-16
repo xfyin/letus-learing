@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import com.letus.common.pojo.LetusResult;
 import com.letus.common.pojo.SearchResult;
 import com.letus.common.utils.HttpClientUtil;
-import com.letus.common.utils.JsonUtils;
 import com.letus.portal.service.SearchService;
 
 /**
