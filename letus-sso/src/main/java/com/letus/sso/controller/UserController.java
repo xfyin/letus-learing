@@ -7,16 +7,27 @@
  */
 package com.letus.sso.controller;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.letus.common.pojo.LetusResult;
+import com.letus.common.utils.CookieUtils;
 import com.letus.common.utils.ExceptionUtil;
 import com.letus.pojo.TbUser;
 import com.letus.sso.service.UserService;
@@ -41,11 +52,11 @@ public class UserController {
    * 用户注册前，检查用户信息
    * 
    * @param content
-   *        内容
+   *          内容
    * @param type
-   *        类型
+   *          类型
    * @param callback
-   *        回调函数
+   *          回调函数
    * @return Object
    */
   @RequestMapping("/check/{content}/{type}")
@@ -86,7 +97,7 @@ public class UserController {
    * 注册时 增加用户
    * 
    * @param user
-   *        用户信息
+   *          用户信息
    * @return LetusResult
    */
   @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -129,15 +140,20 @@ public class UserController {
   /**
    * 用户登录
    * 
+   * @param request
+   *          请求
+   * @param response
+   *          响应
    * @param username
-   *        用户名
+   *          用户名
    * @param password
-   *        密码
+   *          密码
    * @return LetusResult
    */
   @RequestMapping(value = "/login", method = RequestMethod.POST)
   @ResponseBody
-  public LetusResult login(String username, String password) {
+  public LetusResult login(HttpServletRequest request, HttpServletResponse response,
+                           String username, String password) {
     // 用户名，密码 非空校验
     if (StringUtils.isBlank(username)) {
       return LetusResult.build(103, "用户名不能为空");
@@ -147,7 +163,13 @@ public class UserController {
     }
     
     try {
-      return userService.login(username, password);
+      // 登录逻辑处理
+      LetusResult result = userService.login(username, password);
+      // 登录成功后回去token
+      String token = (String) result.getData();
+      // 设置cookie，其中cookie的有效期为关闭浏览器时为止
+      CookieUtils.setCookie(request, response, "LS_TOKEN", token);
+      return result;
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -159,9 +181,9 @@ public class UserController {
    * 根据token获取用户信息
    * 
    * @param token
-   *        token
+   *          token
    * @param callback
-   *        回调函数
+   *          回调函数
    * @return LetusResult
    */
   @RequestMapping(value = "/token/{token}", method = RequestMethod.GET)
@@ -189,17 +211,24 @@ public class UserController {
    * 安全退出登录
    * 
    * @param token
-   *        token
+   *          token
    * @param callback
-   *        回调函数
+   *          回调函数
    * @return Object
    */
   @RequestMapping(value = "/logout/{token}", method = RequestMethod.GET)
   @ResponseBody
-  public Object logout(@PathVariable String token, String callback) {
+  public Object logout(@PathVariable String token, String callback, HttpServletResponse  response) {
     LetusResult result = userService.logout(token);
     if (StringUtils.isBlank(callback)) {
-      return result;
+      try {
+        // 回调首页
+        response.sendRedirect("http://localhost:8082");
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }  
+      return null;
     }
     MappingJacksonValue value = new MappingJacksonValue(result);
     value.setJsonpFunction(callback);
@@ -210,9 +239,9 @@ public class UserController {
    * 校验结果返回
    * 
    * @param result
-   *        校验结果
+   *          校验结果
    * @param callback
-   *        回调函数
+   *          回调函数
    * @return Object
    */
   private Object checkResult(LetusResult result, String callback) {
