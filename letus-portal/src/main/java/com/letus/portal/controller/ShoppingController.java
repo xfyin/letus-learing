@@ -90,6 +90,7 @@ public class ShoppingController {
   public ModelAndView queryShoppingItemList(HttpServletRequest request, ModelAndView mv) {
     List<ShoppingItem> shoppingItems = shoppingService.queryShoppingItemList(request);
     mv.addObject("shoppingList", shoppingItems);
+    mv.addObject("totalNum", shoppingItems.size());
     mv.setViewName("shopping");
     return mv;
   }

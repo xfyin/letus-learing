@@ -157,7 +157,7 @@ public class ShoppingServiceImpl implements ShoppingService {
       shoppingItems.remove(item);
       // 更新cookie
       CookieUtils.setCookie(request, response, SHOPPING_ITEM_COOKIE_NAME,
-          JsonUtils.objectToJson(shoppingItems));
+          JsonUtils.objectToJson(shoppingItems), true);
       return LetusResult.ok();
     }
     return LetusResult.build(102, "该商品已被删除！");
