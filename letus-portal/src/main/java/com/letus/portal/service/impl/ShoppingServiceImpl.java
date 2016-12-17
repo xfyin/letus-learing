@@ -55,7 +55,7 @@ public class ShoppingServiceImpl implements ShoppingService {
   
   @Override
   public LetusResult addItemToShopping(HttpServletRequest request, HttpServletResponse response,
-                                       long itemId, int num) {
+                                       long itemId, int num, int modify) {
     // 1.取商品购物车列表，若该商品存在直接将num+原来的数量,否则调用用户的添加商品购物车逻辑
     List<ShoppingItem> shoppingItemList = this.getShoppingItemList(request);
     // 该商品信息是否在购物车存在
@@ -64,8 +64,14 @@ public class ShoppingServiceImpl implements ShoppingService {
     for (ShoppingItem shoppingItem : shoppingItemList) {
       // 购物车中已经存在商品信息
       if (shoppingItem.getId() == itemId) {
-        // 商品数量 = 已经存在的数量+ 新的数量
-        shoppingItem.setNum(shoppingItem.getNum() + num);
+        // 直接修改了商品数量，离焦事件
+        if (1 == modify) {
+          shoppingItem.setNum(num);
+        }
+        else {
+          // 商品数量 = 已经存在的数量+ 新的数量
+          shoppingItem.setNum(shoppingItem.getNum() + num);
+        }
         existsItem = true;
         break;
       }
@@ -129,5 +135,31 @@ public class ShoppingServiceImpl implements ShoppingService {
   @Override
   public List<ShoppingItem> queryShoppingItemList(HttpServletRequest request) {
     return this.getShoppingItemList(request);
+  }
+  
+  @Override
+  public LetusResult deleteShoppintItem(HttpServletRequest request, HttpServletResponse response,
+                                        long itemId) {
+    List<ShoppingItem> shoppingItems = this.getShoppingItemList(request);
+    // 该商品信息是否在购物车存在
+    boolean existsItem = false;
+    ShoppingItem item = null;
+    for (ShoppingItem shoppingItem : shoppingItems) {
+      if (shoppingItem.getId() == itemId) {
+        existsItem = true;
+        item = shoppingItem;
+        break;
+      }
+    }
+    
+    // 若商品信息存在
+    if (existsItem) {
+      shoppingItems.remove(item);
+      // 更新cookie
+      CookieUtils.setCookie(request, response, SHOPPING_ITEM_COOKIE_NAME,
+          JsonUtils.objectToJson(shoppingItems));
+      return LetusResult.ok();
+    }
+    return LetusResult.build(102, "该商品已被删除！");
   }
 }

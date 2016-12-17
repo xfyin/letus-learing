@@ -143,14 +143,12 @@
 </div>
 <!--推荐位html修改处-->
 
-
-<script type="text/javascript" src="/js/base-v1.js"></script>
 <!-- footer start -->
 <jsp:include page="commons/footer.jsp" />
 <!-- footer end -->
 
+<script type="text/javascript" src="/js/base-v1.js"></script>
 <!-- 购物车相关业务 -->
-<script type="text/javascript" src="/js/cart.js"></script>
+<script type="text/javascript" src="/js/shopping.js"></script>
 <script type="text/javascript" src="/js/jquery.price_format.2.0.min.js"></script>
-
 </html>

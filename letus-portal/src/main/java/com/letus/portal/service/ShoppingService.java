@@ -34,10 +34,12 @@ public interface ShoppingService {
    *          商品id
    * @param num
    *          数量
+   * @param modify
+   *          ==1为 直接修改数量
    * @return LetusResult
    */
   LetusResult addItemToShopping(HttpServletRequest request, HttpServletResponse response,
-                                long itemId, int num);
+                                long itemId, int num, int modify);
   
   /**
    * 获取购物车商品列表
@@ -47,4 +49,18 @@ public interface ShoppingService {
    * @return 商品列表
    */
   List<ShoppingItem> queryShoppingItemList(HttpServletRequest request);
+  
+  /**
+   * 根据商品id删除购物车中商品信息
+   * 
+   * @param request
+   *          请求
+   * @param response
+   *          响应
+   * @param itemId
+   *          商品id
+   * @return LetusResult
+   */
+  LetusResult deleteShoppintItem(HttpServletRequest request, HttpServletResponse response,
+                                 long itemId);
 }

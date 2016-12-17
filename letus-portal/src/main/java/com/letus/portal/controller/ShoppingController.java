@@ -50,12 +50,16 @@ public class ShoppingController {
    *          商品id
    * @param num
    *          数量
-   * @return 重定向到 【展示添加商品成功页面】
+   * @param modify
+   *          ==1表示直接修改数量 ==0表示通过'+' 或者 '-'修改数量
+   * @return 重定向到 {@link ShoppingController#showSucess()}
    */
   @RequestMapping("/add/{itemId}")
   public String addShoppingItem(HttpServletRequest request, HttpServletResponse response,
-                                @PathVariable long itemId, @RequestParam(defaultValue = "1") int num) {
-    shoppingService.addItemToShopping(request, response, itemId, num);
+                                @PathVariable long itemId,
+                                @RequestParam(defaultValue = "1") int num,
+                                @RequestParam(defaultValue = "0") int modify) {
+    shoppingService.addItemToShopping(request, response, itemId, num, modify);
     // 重定向到 【展示添加商品成功页面】, web.xml中配置了.do 也可以
     return "redirect:/shopping/success.html";
   }
@@ -89,4 +93,23 @@ public class ShoppingController {
     mv.setViewName("shopping");
     return mv;
   }
+  
+  /**
+   * 从购物车中删除商品信息
+   * 
+   * @param request
+   *          请求
+   * @param response
+   *          响应
+   * @param itemId
+   *          商品id
+   * @return 返回购物车 {@link ShoppingController#queryShoppingItemList(HttpServletRequest, ModelAndView)}
+   */
+  @RequestMapping("/delete/{itemId}")
+  public String deleteShoppintItem(HttpServletRequest request, HttpServletResponse response,
+                                   @PathVariable long itemId) {
+    shoppingService.deleteShoppintItem(request, response, itemId);
+    return "redirect:/shopping/shopping.html";
+  }
+  
 }
