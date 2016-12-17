@@ -30,12 +30,19 @@ import com.letus.portal.service.ContentService;
 @Service
 public class ContentServiceImpl implements ContentService {
   
+  /**
+   * 服务层  基础URL
+   */
   @Value("${REST_BASE_URL}")
   private String REST_BASE_URL;
   
+  /**
+   * 首页大广告位URL
+   */
   @Value("${REST_INDEX_AD_URL}")
   private String REST_INDEX_AD_URL;
   
+  @SuppressWarnings("unchecked")
   @Override
   public String queryContentList() {
     // 调用服务层服务

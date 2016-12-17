@@ -57,10 +57,10 @@ public class ShoppingServiceImpl implements ShoppingService {
   public LetusResult addItemToShopping(HttpServletRequest request, HttpServletResponse response,
                                        long itemId, int num) {
     // 1.取商品购物车列表，若该商品存在直接将num+原来的数量,否则调用用户的添加商品购物车逻辑
-    List<ShoppingItem> shoppingItemList = this.getShoppingItemList(request, response);
+    List<ShoppingItem> shoppingItemList = this.getShoppingItemList(request);
     // 该商品信息是否在购物车存在
     boolean existsItem = false;
-    //shoppingItemList 不会为空 new ArrayList()<>;
+    // shoppingItemList 不会为空 new ArrayList()<>;
     for (ShoppingItem shoppingItem : shoppingItemList) {
       // 购物车中已经存在商品信息
       if (shoppingItem.getId() == itemId) {
@@ -111,8 +111,7 @@ public class ShoppingServiceImpl implements ShoppingService {
    *          响应
    * @return 商品列表
    */
-  private List<ShoppingItem> getShoppingItemList(HttpServletRequest request,
-                                                 HttpServletResponse response) {
+  private List<ShoppingItem> getShoppingItemList(HttpServletRequest request) {
     String jsonCookie = CookieUtils.getCookieValue(request, SHOPPING_ITEM_COOKIE_NAME, true);
     if (StringUtils.isBlank(jsonCookie)) {
       // 避免空指针
@@ -125,5 +124,10 @@ public class ShoppingServiceImpl implements ShoppingService {
       e.printStackTrace();
       return new ArrayList<>();
     }
+  }
+  
+  @Override
+  public List<ShoppingItem> queryShoppingItemList(HttpServletRequest request) {
+    return this.getShoppingItemList(request);
   }
 }

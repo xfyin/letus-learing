@@ -91,6 +91,7 @@ public class ItemServiceImpl implements ItemService {
     return null;
   }
   
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public String queryItemParamItem(long itemId) {
     try {

@@ -7,10 +7,13 @@
  */
 package com.letus.portal.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.letus.common.pojo.LetusResult;
+import com.letus.common.pojo.ShoppingItem;
 
 /**
  * 购物车service
@@ -35,4 +38,13 @@ public interface ShoppingService {
    */
   LetusResult addItemToShopping(HttpServletRequest request, HttpServletResponse response,
                                 long itemId, int num);
+  
+  /**
+   * 获取购物车商品列表
+   * 
+   * @param request
+   *          请求
+   * @return 商品列表
+   */
+  List<ShoppingItem> queryShoppingItemList(HttpServletRequest request);
 }
