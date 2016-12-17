@@ -38,7 +38,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     // 在handle之前处理；返回值决定handle是否执行，true执行，false不执行
     // 1.判断用户是否登录
     // ---从cookie中取token
-    String token = CookieUtils.getCookieValue(request, "LS_TOKEN");
+    String token = CookieUtils.getCookieValue(request, userService.LOGIN_TOKEN_COOKIE_NAME);
     // ---根据token换取用户信息，调用sso系统中的接口
     TbUser user = userService.queryUserByToken(token);
     // 若取不到用户信息，则跳转到登录页面,并把用户请求的URL作为参数传递给登录页面

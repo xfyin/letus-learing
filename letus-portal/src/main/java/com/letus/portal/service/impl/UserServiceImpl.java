@@ -42,6 +42,11 @@ public class UserServiceImpl implements UserService {
   @Value("${SSO_PAGE_URL}")
   public String SSO_PAGE_URL;
   
+  /**
+   * 用户登录token的cookie名称
+   */
+  @Value("${LOGIN_TOKEN_COOKIE_NAME}")
+  public String LOGIN_TOKEN_COOKIE_NAME;
   
   @Override
   public TbUser queryUserByToken(String token) {

@@ -26,6 +26,7 @@ import com.letus.common.utils.CookieUtils;
 import com.letus.common.utils.ExceptionUtil;
 import com.letus.pojo.TbUser;
 import com.letus.sso.service.UserService;
+import com.letus.sso.service.impl.UserServiceImpl;
 
 /**
  * 用户controller
@@ -163,7 +164,8 @@ public class UserController {
       // 登录成功后回去token
       String token = (String) result.getData();
       // 设置cookie，其中cookie的有效期为关闭浏览器时为止
-      CookieUtils.setCookie(request, response, "LS_TOKEN", token);
+      CookieUtils
+          .setCookie(request, response, new UserServiceImpl().LOGIN_TOKEN_COOKIE_NAME, token);
       return result;
     }
     catch (Exception e) {
@@ -213,16 +215,16 @@ public class UserController {
    */
   @RequestMapping(value = "/logout/{token}", method = RequestMethod.GET)
   @ResponseBody
-  public Object logout(@PathVariable String token, String callback, HttpServletResponse  response) {
+  public Object logout(@PathVariable String token, String callback, HttpServletResponse response) {
     LetusResult result = userService.logout(token);
     if (StringUtils.isBlank(callback)) {
       try {
         // 回调首页
-        response.sendRedirect((String)result.getData());
+        response.sendRedirect((String) result.getData());
       }
       catch (IOException e) {
         e.printStackTrace();
-      }  
+      }
       return null;
     }
     MappingJacksonValue value = new MappingJacksonValue(result);

@@ -54,6 +54,12 @@ public class UserServiceImpl implements UserService {
   private String PORTAL_BASE_URL;
   
   /**
+   * 用户登录token的cookie名称
+   */
+  @Value("${LOGIN_TOKEN_COOKIE_NAME}")
+  public String LOGIN_TOKEN_COOKIE_NAME;
+  
+  /**
    * 缓存
    */
   @Autowired
