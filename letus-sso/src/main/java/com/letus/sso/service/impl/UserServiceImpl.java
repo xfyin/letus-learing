@@ -27,7 +27,7 @@ import com.letus.sso.dao.JedisClient;
 import com.letus.sso.service.UserService;
 
 /**
- * 
+ * 用户信息service
  * 
  * @author xfyin
  * 

@@ -165,7 +165,7 @@ public class UserController {
       String token = (String) result.getData();
       // 设置cookie，其中cookie的有效期为关闭浏览器时为止
       CookieUtils
-          .setCookie(request, response, new UserServiceImpl().LOGIN_TOKEN_COOKIE_NAME, token);
+          .setCookie(request, response, "LS_TOKEN", token);
       return result;
     }
     catch (Exception e) {
