@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.letus.common.pojo.LetusResult;
 import com.letus.common.pojo.ShoppingItem;
 import com.letus.portal.service.ShoppingService;
 
@@ -111,6 +112,24 @@ public class ShoppingController {
                                    @PathVariable long itemId) {
     shoppingService.deleteShoppintItem(request, response, itemId);
     return "redirect:/shopping/shopping.html";
+  }
+  
+  /**
+   * 从购物车中清空商品信息（用户提交完订单后，将提交的订单从购物车中清空）
+   * 
+   * @param request
+   *          请求
+   * @param response
+   *          响应
+   * @param itemId
+   *          商品id
+   * @return 返回购物车 {@link ShoppingController#queryShoppingItemList(HttpServletRequest, ModelAndView)}
+   */
+  @RequestMapping("/clear/{itemId}")
+  @ResponseBody
+  public LetusResult clearShoppintItem(HttpServletRequest request, HttpServletResponse response,
+                                       @PathVariable long itemId) {
+    return shoppingService.deleteShoppintItem(request, response, itemId);
   }
   
 }
