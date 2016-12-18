@@ -30,14 +30,14 @@
 
 <form id="orderForm" class="hide" action="/order/create.html" method="post">
 		<input type="hidden" name="paymentType" value="1"/>
-		<c:forEach items="${cartList }" var="cart" varStatus="status">
-			<c:set var="totalPrice"  value="${ totalPrice + (cart.price * cart.num)}"/>
-			<input type="hidden" name="orderItems[${status.index}].itemId" value="${cart.id}"/>
-			<input type="hidden" name="orderItems[${status.index}].num" value="${cart.num }"/>
-			<input type="hidden" name="orderItems[${status.index}].price" value="${cart.price}"/>
-			<input type="hidden" name="orderItems[${status.index}].totalFee" value="${cart.price * cart.num}"/>
-			<input type="hidden" name="orderItems[${status.index}].title" value="${cart.title}"/>
-			<input type="hidden" name="orderItems[${status.index}].picPath" value="${cart.images[0]}"/>
+		<c:forEach items="${shoppingList }" var="shopping" varStatus="status">
+			<c:set var="totalPrice"  value="${ totalPrice + (shopping.price * shopping.num)}"/>
+			<input type="hidden" name="orderItems[${status.index}].itemId" value="${shopping.id}"/>
+			<input type="hidden" name="orderItems[${status.index}].num" value="${shopping.num }"/>
+			<input type="hidden" name="orderItems[${status.index}].price" value="${shopping.price}"/>
+			<input type="hidden" name="orderItems[${status.index}].totalFee" value="${shopping.price * shopping.num}"/>
+			<input type="hidden" name="orderItems[${status.index}].title" value="${shopping.title}"/>
+			<input type="hidden" name="orderItems[${status.index}].picPath" value="${shopping.image}"/>
 		</c:forEach>
 		<input type="hidden" name="payment" value="<fmt:formatNumber groupingUsed="false" maxFractionDigits="2" minFractionDigits="2" value="${totalPrice/100 }"/>"/>
 		<input type="hidden" name="orderShipping.receiverName" value="入云龙"/>
@@ -172,7 +172,7 @@
 <div class="step-tit">
 	<h3>送货清单</h3>
 	<div class="extra-r">
-					<a href="/cart/show.html" id="cartRetureUrl" class="return-edit ftx-05">返回修改购物车</a>
+					<a href="/shopping/show.html" id="cartRetureUrl" class="return-edit ftx-05">返回修改购物车</a>
 			</div>
 </div>
 <div class="step-cont" id="skuPayAndShipment-cont">
@@ -183,27 +183,27 @@
      <!--配送方式-->
     <h4 class="vendor_name_h" id="0">商家：我们商城</h4>		         
     <div class="goods-suit goods-last">
-	 <c:forEach items="${cartList }" var="cart">
+	 <c:forEach items="${shoppingList}" var="shopping">
 		<div class="goods-item goods-item-extra">
 
 			<div class="p-img">
-				<a target="_blank" href="/item/${cart.id}.html">
-					<img src="${cart.images[0]}" alt="">
+				<a target="_blank" href="/item/${shopping.id}.html">
+					<img src="${shopping.image}" alt="">
 				</a>
 			</div>
 			<div class="goods-msg">
 				<div class="p-name">
-					<a href="/item/${cart.id}.html" target="_blank">
-						${cart.title } 
+					<a href="/item/${shopping.id}.html" target="_blank">
+						${shopping.title } 
 					</a>
 				</div>
 				<div class="p-price">
 					<!--增加预售金额显示 begin   预售分阶段支付类型（1：一阶梯全款支付；2：一阶梯定金支付(全款或定金可选)；3：三阶梯仅定金支付） -->
 					<strong>￥<fmt:formatNumber
 							groupingUsed="false" maxFractionDigits="2"
-							minFractionDigits="2" value="${cart.price / 100 }" /></strong>
+							minFractionDigits="2" value="${shopping.price / 100 }" /></strong>
 					<!--增加预售金额显示 end-->
-					<span class="ml20"> x${cart.num} </span> 
+					<span class="ml20"> x${shopping.num} </span> 
 					<span class="ml20 p-inventory" skuId="11555193">有货</span>
 				</div>
 				<i class="p-icon p-icon-w"></i><span class="ftx-04">7天无理由退货</span>
