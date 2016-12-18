@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.letus.common.utils.JsonUtils;
 import com.letus.mapper.TbItemCatMapper;
 import com.letus.pojo.TbItemCat;

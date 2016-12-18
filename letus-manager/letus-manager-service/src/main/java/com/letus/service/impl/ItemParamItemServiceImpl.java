@@ -35,6 +35,7 @@ public class ItemParamItemServiceImpl implements ItemParamItemService {
   @Autowired
   private TbItemParamItemMapper itemParamItemMapper;
   
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public String getItemParamItemByItemId(long itemId) {
     TbItemParamItemExample example = new TbItemParamItemExample();

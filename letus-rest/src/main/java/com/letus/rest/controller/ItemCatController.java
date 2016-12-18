@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.MappingJsonFactory;
 import com.letus.common.utils.JsonUtils;
 import com.letus.rest.pojo.CatResult;
 import com.letus.rest.service.ItemCatService;

@@ -104,11 +104,11 @@
   </delete>
   <insert id="insert" parameterType="com.letus.pojo.TbContentCategory" >
   
-  	<!-- mybatis，一个事务中获取最后一次的自动增长主键   需要返回自增主键id-->
-  	<selectKey keyProperty="id" resultType="long" order="AFTER">
-  		SELECT LAST_INSERT_ID()
-  	</selectKey>
-  	
+    <!-- mybatis，一个事务中获取最后一次的自动增长主键   需要返回自增主键id-->
+    <selectKey keyProperty="id" resultType="long" order="AFTER">
+       SELECT LAST_INSERT_ID()
+    </selectKey>
+   
     insert into tb_content_category (id, parent_id, name, 
       status, sort_order, is_parent, 
       created, updated)
@@ -118,11 +118,11 @@
   </insert>
   <insert id="insertSelective" parameterType="com.letus.pojo.TbContentCategory" >
   
-  	<!-- mybatis，一个事务中获取自动增长主键最后一个 -->
-  	<selectKey keyProperty="id" resultType="long" order="AFTER">
-  		SELECT LAST_INSERT_ID()
-  	</selectKey>
-  	
+    <!-- mybatis，一个事务中获取自动增长主键最后一个 -->
+    <selectKey keyProperty="id" resultType="long" order="AFTER">
+        SELECT LAST_INSERT_ID()
+    </selectKey>
+    
     insert into tb_content_category
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
