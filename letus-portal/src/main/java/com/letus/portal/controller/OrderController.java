@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.letus.common.pojo.ShoppingItem;
+import com.letus.pojo.TbUser;
 import com.letus.portal.pojo.Order;
 import com.letus.portal.service.OrderService;
 import com.letus.portal.service.ShoppingService;
@@ -72,6 +73,12 @@ public class OrderController {
   @RequestMapping(value = "/create", method = RequestMethod.POST)
   public ModelAndView createOrder(HttpServletRequest request, HttpServletResponse response, Order order, ModelAndView mv) {
     try {
+      // 调用创建订单服务之前，需要补全用户信息
+      // 从cookie中取得LS_TOKEN的内容，根据token调用sso系统的服务获取用户信息
+      TbUser user = (TbUser) request.getAttribute("loginUser");
+      // 将用户id和用户昵设置到订单信息中
+      order.setUserId(user.getId());
+      order.setBuyerNick(user.getUsername());
       String orderId = orderService.createOrder(request, response, order);
       mv.addObject("orderId", orderId);
       mv.addObject("payment", order.getPayment());
